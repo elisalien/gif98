@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows 98 GIF Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Desktop Background -->
+    <div id="desktop" class="desktop">
+        <div class="desktop-icons">
+            <div class="desktop-icon">
+                <div class="icon-image"></div>
+                <span class="icon-label">Mon Ordinateur</span>
+            </div>
+        </div>
+
+        <!-- GIF Upload Window -->
+        <div id="upload-window" class="window" style="left: 50px; top: 50px;">
+            <div class="window-title-bar">
+                <div class="window-title">📁 Upload GIFs</div>
+                <div class="window-controls">
+                    <button class="window-control minimize" type="button">_</button>
+                    <button class="window-control maximize" type="button">□</button>
+                    <button class="window-control close" type="button" data-window="upload-window">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="upload-section">
+                    <input type="file" id="gif-upload" accept=".gif" multiple style="display: none;">
+                    <button type="button" class="upload-button" onclick="document.getElementById('gif-upload').click()">Choisir des GIFs</button>
+                </div>
+                <div id="gif-list" class="gif-list">
+                    <div class="no-gifs">Aucun GIF uploadé</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animation Controls Window -->
+        <div id="controls-window" class="window" style="left: 350px; top: 50px;">
+            <div class="window-title-bar">
+                <div class="window-title">🎛️ Contrôles d'Animation</div>
+                <div class="window-controls">
+                    <button class="window-control minimize" type="button">_</button>
+                    <button class="window-control maximize" type="button">□</button>
+                    <button class="window-control close" type="button" data-window="controls-window">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <div class="control-group">
+                    <label>BPM: <span id="bpm-display">120</span></label>
+                    <input type="range" id="bpm-slider" min="60" max="200" value="120" step="1">
+                    <input type="number" id="bpm-input" min="60" max="200" value="120">
+                </div>
+
+                <div class="control-group">
+                    <label>Type d'effet:</label>
+                    <select id="effect-select">
+                        <option value="Error Dialog Spam">Spam de Dialogues d'Erreur</option>
+                        <option value="Blue Screen of Death">Écran Bleu de la Mort</option>
+                        <option value="Window Cascade Glitch">Cascade de Fenêtres</option>
+                        <option value="Screen Corruption">Corruption d'Écran</option>
+                        <option value="Memory Leak Visual">Fuite Mémoire Visuelle</option>
+                        <option value="System Freeze">Gel Système</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Intensité: <span id="intensity-display">5</span></label>
+                    <input type="range" id="intensity-slider" min="1" max="10" value="5">
+                </div>
+
+                <div class="control-group">
+                    <label>Nb. fenêtres max: <span id="max-windows-display">5</span></label>
+                    <input type="range" id="max-windows-slider" min="1" max="10" value="5">
+                </div>
+
+                <div class="control-group">
+                    <label>Comportement:</label>
+                    <select id="behavior-select">
+                        <option value="Random">Aléatoire</option>
+                        <option value="Grid">Grille</option>
+                        <option value="Cascade">Cascade</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Launch Button -->
+        <div id="launch-window" class="window" style="left: 50px; top: 400px; width: 200px;">
+            <div class="window-title-bar">
+                <div class="window-title">🚀 Lancer</div>
+                <div class="window-controls">
+                    <button class="window-control close" type="button" data-window="launch-window">×</button>
+                </div>
+            </div>
+            <div class="window-content">
+                <button id="launch-btn" type="button" class="launch-button">Lancer le Visualiseur</button>
+            </div>
+        </div>
+
+        <!-- Taskbar -->
+        <div class="taskbar">
+            <div class="start-button">
+                <span class="start-icon">⊞</span>
+                Démarrer
+            </div>
+            <div class="taskbar-time" id="taskbar-time">14:00</div>
+        </div>
+    </div>
+
+    <!-- Play Page -->
+    <div id="play-page" class="play-page hidden">
+        <div id="play-area" class="play-area"></div>
+        <div id="beat-indicator" class="beat-indicator"></div>
+        <button id="back-to-index" type="button" class="back-button">Retour aux Contrôles</button>
+    </div>
+
+    <!-- Error Dialog Template -->
+    <div id="error-dialog-template" class="error-dialog hidden">
+        <div class="window-title-bar">
+            <div class="window-title">⚠️ Erreur Système</div>
+            <div class="window-controls">
+                <button class="window-control close" type="button">×</button>
+            </div>
+        </div>
+        <div class="window-content">
+            <div class="error-content">
+                <div class="error-icon">⚠️</div>
+                <div class="error-message"></div>
+                <button class="error-ok-btn" type="button">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BSOD Template -->
+    <div id="bsod-template" class="bsod hidden">
+        <div class="bsod-content">
+            <h2>Une erreur fatale s'est produite</h2>
+            <p>Une exception fatale OE s'est produite à 0028:C0011E36 dans VXD VMM(01) +00010E36. L'application en cours va être fermée.</p>
+            <p>* Appuyez sur n'importe quelle touche pour continuer</p>
+            <p>* Appuyez sur CTRL+ALT+SUPPR pour redémarrer votre ordinateur. Vous</p>
+            <p>  perdrez toutes les données non sauvegardées dans toutes les applications.</p>
+            <p>Appuyez sur n'importe quelle touche pour continuer _</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
