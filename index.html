@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows 98 GIF Visualizer</title>
+    <title>Windows XP GIF Visualizer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
         <!-- GIF Upload Window -->
         <div id="upload-window" class="window" style="left: 50px; top: 50px;">
             <div class="window-title-bar">
-                <div class="window-title">📁 Upload GIFs</div>
+                <div class="window-title">🖼️ Gestionnaire de GIFs</div>
                 <div class="window-controls">
                     <button class="window-control minimize" type="button">_</button>
                     <button class="window-control maximize" type="button">□</button>
@@ -40,7 +40,7 @@
         <!-- Animation Controls Window -->
         <div id="controls-window" class="window" style="left: 350px; top: 50px;">
             <div class="window-title-bar">
-                <div class="window-title">🎛️ Contrôles d'Animation</div>
+                <div class="window-title">⚙️ Panneau de Contrôle d'Animation</div>
                 <div class="window-controls">
                     <button class="window-control minimize" type="button">_</button>
                     <button class="window-control maximize" type="button">□</button>
@@ -57,12 +57,29 @@
                 <div class="control-group">
                     <label>Type d'effet:</label>
                     <select id="effect-select">
-                        <option value="Error Dialog Spam">Spam de Dialogues d'Erreur</option>
-                        <option value="Blue Screen of Death">Écran Bleu de la Mort</option>
-                        <option value="Window Cascade Glitch">Cascade de Fenêtres</option>
-                        <option value="Screen Corruption">Corruption d'Écran</option>
-                        <option value="Memory Leak Visual">Fuite Mémoire Visuelle</option>
-                        <option value="System Freeze">Gel Système</option>
+                        <optgroup label="🎨 Effets Artistiques">
+                            <option value="Matrix Rain">Matrix - Pluie de Code</option>
+                            <option value="Kaleidoscope">Kaléidoscope Psychédélique</option>
+                            <option value="Vortex Spiral">Vortex Spiral</option>
+                            <option value="DNA Helix">Hélice ADN</option>
+                            <option value="Particle Fireworks">Feux d'Artifice Particules</option>
+                            <option value="Wave Motion">Vagues Ondulantes</option>
+                        </optgroup>
+                        <optgroup label="🎭 Effets Géométriques">
+                            <option value="3D Cube Rotation">Cube 3D Rotatif</option>
+                            <option value="Mosaic Grid">Mosaïque Dynamique</option>
+                            <option value="Orbit System">Système Orbital</option>
+                            <option value="Tunnel Vision">Vision Tunnel</option>
+                            <option value="Flip Book">Flip Book Rapide</option>
+                        </optgroup>
+                        <optgroup label="💥 Effets Système (Classiques)">
+                            <option value="Error Dialog Spam">Spam de Dialogues d'Erreur</option>
+                            <option value="Blue Screen of Death">Écran Bleu de la Mort</option>
+                            <option value="Window Cascade Glitch">Cascade de Fenêtres</option>
+                            <option value="Screen Corruption">Corruption d'Écran</option>
+                            <option value="Memory Leak Visual">Fuite Mémoire Visuelle</option>
+                            <option value="System Freeze">Gel Système</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -77,26 +94,29 @@
                 </div>
 
                 <div class="control-group">
-                    <label>Comportement:</label>
+                    <label>Disposition:</label>
                     <select id="behavior-select">
                         <option value="Random">Aléatoire</option>
-                        <option value="Grid">Grille</option>
-                        <option value="Cascade">Cascade</option>
+                        <option value="Grid">Grille Organisée</option>
+                        <option value="Cascade">Cascade XP</option>
+                        <option value="Circle">Cercle</option>
+                        <option value="Diagonal">Diagonale</option>
+                        <option value="Center">Centre Explosif</option>
                     </select>
                 </div>
             </div>
         </div>
 
         <!-- Launch Button -->
-        <div id="launch-window" class="window" style="left: 50px; top: 400px; width: 200px;">
+        <div id="launch-window" class="window" style="left: 50px; top: 400px; width: 220px;">
             <div class="window-title-bar">
-                <div class="window-title">🚀 Lancer</div>
+                <div class="window-title">🚀 Démarrage</div>
                 <div class="window-controls">
                     <button class="window-control close" type="button" data-window="launch-window">×</button>
                 </div>
             </div>
             <div class="window-content">
-                <button id="launch-btn" type="button" class="launch-button">Lancer le Visualiseur</button>
+                <button id="launch-btn" type="button" class="launch-button">▶️ Lancer le Spectacle</button>
             </div>
         </div>
 
