@@ -6,7 +6,7 @@ const AppState = {
         bpm: 120,
         maxWindows: 5,
         glitchIntensity: 5,
-        selectedEffect: 'Error Dialog Spam',
+        selectedEffect: 'Matrix Rain',
         windowBehavior: 'Random'
     },
     playState: {
@@ -445,14 +445,15 @@ function createGifWindow(gif) {
 function positionWindow(windowElement) {
     const playArea = document.getElementById('play-area');
     if (!playArea) return;
-    
+
     const areaWidth = playArea.clientWidth;
     const areaHeight = playArea.clientHeight;
-    
+
     let x, y;
-    
+
     switch (AppState.settings.windowBehavior) {
         case 'Grid':
+        case 'Grille Organisée':
             const gridSize = Math.ceil(Math.sqrt(AppState.settings.maxWindows));
             const cellWidth = areaWidth / gridSize;
             const cellHeight = areaHeight / gridSize;
@@ -460,18 +461,47 @@ function positionWindow(windowElement) {
             x = (index % gridSize) * cellWidth;
             y = Math.floor(index / gridSize) * cellHeight;
             break;
-            
+
         case 'Cascade':
+        case 'Cascade XP':
             const offset = AppState.playState.activeWindows.length * 30;
             x = 50 + offset;
             y = 50 + offset;
             break;
-            
-        default: // Random
+
+        case 'Circle':
+        case 'Cercle':
+            const centerX = areaWidth / 2;
+            const centerY = areaHeight / 2;
+            const radius = Math.min(areaWidth, areaHeight) * 0.35;
+            const angle = (AppState.playState.activeWindows.length / AppState.settings.maxWindows) * Math.PI * 2;
+            x = centerX + Math.cos(angle) * radius - 150;
+            y = centerY + Math.sin(angle) * radius - 100;
+            break;
+
+        case 'Diagonal':
+        case 'Diagonale':
+            const diagIndex = AppState.playState.activeWindows.length;
+            const diagStep = Math.min(areaWidth, areaHeight) / (AppState.settings.maxWindows + 1);
+            x = diagIndex * diagStep;
+            y = diagIndex * diagStep;
+            break;
+
+        case 'Center':
+        case 'Centre Explosif':
+            const centerExpX = areaWidth / 2 - 150;
+            const centerExpY = areaHeight / 2 - 100;
+            const explosionAngle = Math.random() * Math.PI * 2;
+            const explosionDist = Math.random() * 200;
+            x = centerExpX + Math.cos(explosionAngle) * explosionDist;
+            y = centerExpY + Math.sin(explosionAngle) * explosionDist;
+            break;
+
+        default: // Random / Aléatoire
             x = Math.random() * (areaWidth - 300);
             y = Math.random() * (areaHeight - 200);
     }
-    
+
     windowElement.style.left = Math.max(0, x) + 'px';
     windowElement.style.top = Math.max(0, y) + 'px';
 }
@@ -504,8 +534,44 @@ function clearPlayArea() {
 
 function triggerGlitchEffect() {
     const effect = AppState.settings.selectedEffect;
-    
+
     switch (effect) {
+        // Artistic Effects
+        case 'Matrix Rain':
+            matrixRainEffect();
+            break;
+        case 'Kaleidoscope':
+            kaleidoscopeEffect();
+            break;
+        case 'Vortex Spiral':
+            vortexSpiralEffect();
+            break;
+        case 'DNA Helix':
+            dnaHelixEffect();
+            break;
+        case 'Particle Fireworks':
+            particleFireworksEffect();
+            break;
+        case 'Wave Motion':
+            waveMotionEffect();
+            break;
+        // Geometric Effects
+        case '3D Cube Rotation':
+            cubicRotationEffect();
+            break;
+        case 'Mosaic Grid':
+            mosaicGridEffect();
+            break;
+        case 'Orbit System':
+            orbitSystemEffect();
+            break;
+        case 'Tunnel Vision':
+            tunnelVisionEffect();
+            break;
+        case 'Flip Book':
+            flipBookEffect();
+            break;
+        // Classic System Effects
         case 'Error Dialog Spam':
             spawnErrorDialog();
             break;
@@ -637,6 +703,511 @@ function systemFreeze() {
             document.body.style.cursor = 'default';
         }, duration);
     }
+}
+
+// ========== NEW ARTISTIC EFFECTS ==========
+
+function matrixRainEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const numColumns = Math.min(AppState.settings.glitchIntensity * 2, 15);
+    const columnWidth = playArea.clientWidth / numColumns;
+
+    for (let i = 0; i < numColumns; i++) {
+        setTimeout(() => {
+            const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+            const matrixWindow = createGifWindow(randomGif);
+
+            const x = i * columnWidth;
+            const y = -100;
+
+            matrixWindow.style.left = x + 'px';
+            matrixWindow.style.top = y + 'px';
+            matrixWindow.style.transition = 'top 3s linear';
+            matrixWindow.classList.add('matrix-fall');
+
+            playArea.appendChild(matrixWindow);
+
+            // Animate falling
+            setTimeout(() => {
+                matrixWindow.style.top = playArea.clientHeight + 'px';
+            }, 50);
+
+            // Remove after falling
+            setTimeout(() => {
+                if (matrixWindow.parentNode) {
+                    matrixWindow.remove();
+                }
+            }, 3500);
+        }, i * 100);
+    }
+}
+
+function kaleidoscopeEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const centerX = playArea.clientWidth / 2;
+    const centerY = playArea.clientHeight / 2;
+    const segments = Math.min(AppState.settings.glitchIntensity, 8);
+    const radius = 200;
+
+    for (let i = 0; i < segments; i++) {
+        const angle = (Math.PI * 2 / segments) * i;
+        const x = centerX + Math.cos(angle) * radius - 75;
+        const y = centerY + Math.sin(angle) * radius - 75;
+
+        const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+        const kaleWindow = createGifWindow(randomGif);
+
+        kaleWindow.style.left = x + 'px';
+        kaleWindow.style.top = y + 'px';
+        kaleWindow.style.transform = `rotate(${angle * 180 / Math.PI}deg)`;
+        kaleWindow.style.transition = 'all 1s ease-in-out';
+        kaleWindow.classList.add('kaleidoscope-segment');
+
+        playArea.appendChild(kaleWindow);
+
+        // Rotate and fade out
+        setTimeout(() => {
+            kaleWindow.style.transform = `rotate(${angle * 180 / Math.PI + 360}deg) scale(0.5)`;
+            kaleWindow.style.opacity = '0';
+        }, 100);
+
+        setTimeout(() => {
+            if (kaleWindow.parentNode) {
+                kaleWindow.remove();
+            }
+        }, 1200);
+    }
+}
+
+function vortexSpiralEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const centerX = playArea.clientWidth / 2;
+    const centerY = playArea.clientHeight / 2;
+    const spiralWindows = Math.min(AppState.settings.glitchIntensity * 2, 12);
+
+    for (let i = 0; i < spiralWindows; i++) {
+        setTimeout(() => {
+            const angle = (i / spiralWindows) * Math.PI * 4; // 2 full rotations
+            const radius = (i / spiralWindows) * 300;
+
+            const x = centerX + Math.cos(angle) * radius - 75;
+            const y = centerY + Math.sin(angle) * radius - 75;
+
+            const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+            const spiralWindow = createGifWindow(randomGif);
+
+            spiralWindow.style.left = x + 'px';
+            spiralWindow.style.top = y + 'px';
+            spiralWindow.style.opacity = '0';
+            spiralWindow.style.transition = 'all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            spiralWindow.classList.add('vortex-spiral');
+
+            playArea.appendChild(spiralWindow);
+
+            setTimeout(() => {
+                spiralWindow.style.opacity = '1';
+                spiralWindow.style.transform = `rotate(${angle * 180 / Math.PI}deg) scale(1.2)`;
+            }, 50);
+
+            setTimeout(() => {
+                spiralWindow.style.opacity = '0';
+                spiralWindow.style.transform = `rotate(${angle * 180 / Math.PI + 180}deg) scale(0.3)`;
+            }, 1000);
+
+            setTimeout(() => {
+                if (spiralWindow.parentNode) {
+                    spiralWindow.remove();
+                }
+            }, 1900);
+        }, i * 80);
+    }
+}
+
+function dnaHelixEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const centerX = playArea.clientWidth / 2;
+    const helixPoints = Math.min(AppState.settings.glitchIntensity * 3, 16);
+    const helixHeight = playArea.clientHeight * 0.6;
+
+    for (let i = 0; i < helixPoints; i++) {
+        setTimeout(() => {
+            const progress = i / helixPoints;
+            const angle = progress * Math.PI * 4; // 2 full rotations
+            const y = 50 + progress * helixHeight;
+            const radius = 100;
+
+            // Create two strands
+            [1, -1].forEach((direction, strandIndex) => {
+                const x = centerX + Math.sin(angle) * radius * direction - 75;
+
+                const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+                const helixWindow = createGifWindow(randomGif);
+
+                helixWindow.style.left = x + 'px';
+                helixWindow.style.top = y + 'px';
+                helixWindow.style.opacity = '0';
+                helixWindow.style.transition = 'all 0.6s ease-out';
+                helixWindow.classList.add('dna-helix');
+
+                playArea.appendChild(helixWindow);
+
+                setTimeout(() => {
+                    helixWindow.style.opacity = '1';
+                    helixWindow.style.transform = `rotate(${angle * 180 / Math.PI}deg)`;
+                }, 50);
+
+                setTimeout(() => {
+                    helixWindow.style.opacity = '0';
+                    helixWindow.style.transform = `rotate(${angle * 180 / Math.PI + 90}deg) scale(0.5)`;
+                }, 1500);
+
+                setTimeout(() => {
+                    if (helixWindow.parentNode) {
+                        helixWindow.remove();
+                    }
+                }, 2200);
+            });
+        }, i * 100);
+    }
+}
+
+function particleFireworksEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const numExplosions = Math.min(AppState.settings.glitchIntensity, 5);
+
+    for (let e = 0; e < numExplosions; e++) {
+        setTimeout(() => {
+            const centerX = Math.random() * playArea.clientWidth;
+            const centerY = Math.random() * playArea.clientHeight;
+            const particles = 8;
+
+            for (let i = 0; i < particles; i++) {
+                const angle = (Math.PI * 2 / particles) * i;
+                const distance = 200;
+
+                const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+                const particle = createGifWindow(randomGif);
+
+                particle.style.left = centerX + 'px';
+                particle.style.top = centerY + 'px';
+                particle.style.transform = 'scale(0.3)';
+                particle.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                particle.classList.add('particle-firework');
+
+                playArea.appendChild(particle);
+
+                setTimeout(() => {
+                    const targetX = centerX + Math.cos(angle) * distance;
+                    const targetY = centerY + Math.sin(angle) * distance;
+
+                    particle.style.left = targetX + 'px';
+                    particle.style.top = targetY + 'px';
+                    particle.style.transform = `scale(1) rotate(${angle * 180 / Math.PI}deg)`;
+                    particle.style.opacity = '1';
+                }, 50);
+
+                setTimeout(() => {
+                    particle.style.opacity = '0';
+                    particle.style.transform = `scale(0) rotate(${angle * 180 / Math.PI + 180}deg)`;
+                }, 1000);
+
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.remove();
+                    }
+                }, 2300);
+            }
+        }, e * 600);
+    }
+}
+
+function waveMotionEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const waveWindows = Math.min(AppState.settings.glitchIntensity * 2, 10);
+    const width = playArea.clientWidth;
+
+    for (let i = 0; i < waveWindows; i++) {
+        setTimeout(() => {
+            const x = (i / waveWindows) * width;
+            const amplitude = 150;
+            const frequency = 0.02;
+            const y = playArea.clientHeight / 2 + Math.sin(i * frequency * Math.PI) * amplitude;
+
+            const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+            const waveWindow = createGifWindow(randomGif);
+
+            waveWindow.style.left = x + 'px';
+            waveWindow.style.top = y + 'px';
+            waveWindow.style.opacity = '0';
+            waveWindow.style.transition = 'all 0.8s ease-in-out';
+            waveWindow.classList.add('wave-motion');
+
+            playArea.appendChild(waveWindow);
+
+            setTimeout(() => {
+                waveWindow.style.opacity = '1';
+                waveWindow.style.transform = `translateY(${Math.sin((i + 5) * frequency * Math.PI) * amplitude - Math.sin(i * frequency * Math.PI) * amplitude}px)`;
+            }, 50);
+
+            setTimeout(() => {
+                waveWindow.style.opacity = '0';
+                waveWindow.style.transform = `translateY(${Math.sin((i + 10) * frequency * Math.PI) * amplitude - Math.sin(i * frequency * Math.PI) * amplitude}px) scale(0.5)`;
+            }, 1500);
+
+            setTimeout(() => {
+                if (waveWindow.parentNode) {
+                    waveWindow.remove();
+                }
+            }, 2400);
+        }, i * 120);
+    }
+}
+
+// ========== GEOMETRIC EFFECTS ==========
+
+function cubicRotationEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const centerX = playArea.clientWidth / 2;
+    const centerY = playArea.clientHeight / 2;
+    const cubeSize = 150;
+
+    // Create 6 faces of a cube
+    const faces = [
+        { x: 0, y: 0, rotateX: 0, rotateY: 0 },      // front
+        { x: 0, y: 0, rotateX: 0, rotateY: 180 },    // back
+        { x: 0, y: 0, rotateX: 0, rotateY: 90 },     // right
+        { x: 0, y: 0, rotateX: 0, rotateY: -90 },    // left
+        { x: 0, y: 0, rotateX: 90, rotateY: 0 },     // top
+        { x: 0, y: 0, rotateX: -90, rotateY: 0 }     // bottom
+    ];
+
+    faces.forEach((face, index) => {
+        setTimeout(() => {
+            const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+            const cubeWindow = createGifWindow(randomGif);
+
+            cubeWindow.style.left = centerX - cubeSize/2 + 'px';
+            cubeWindow.style.top = centerY - cubeSize/2 + 'px';
+            cubeWindow.style.width = cubeSize + 'px';
+            cubeWindow.style.transformStyle = 'preserve-3d';
+            cubeWindow.style.transform = `rotateX(${face.rotateX}deg) rotateY(${face.rotateY}deg) translateZ(${cubeSize/2}px)`;
+            cubeWindow.style.transition = 'all 2s ease-in-out';
+            cubeWindow.classList.add('cube-face');
+
+            playArea.appendChild(cubeWindow);
+
+            setTimeout(() => {
+                cubeWindow.style.transform = `rotateX(${face.rotateX + 360}deg) rotateY(${face.rotateY + 360}deg) translateZ(${cubeSize/2}px)`;
+            }, 100);
+
+            setTimeout(() => {
+                cubeWindow.style.opacity = '0';
+            }, 1800);
+
+            setTimeout(() => {
+                if (cubeWindow.parentNode) {
+                    cubeWindow.remove();
+                }
+            }, 2200);
+        }, index * 150);
+    });
+}
+
+function mosaicGridEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const gridSize = Math.min(AppState.settings.glitchIntensity, 6);
+    const cellWidth = playArea.clientWidth / gridSize;
+    const cellHeight = playArea.clientHeight / gridSize;
+
+    for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize; col++) {
+            setTimeout(() => {
+                const x = col * cellWidth;
+                const y = row * cellHeight;
+
+                const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+                const mosaicWindow = createGifWindow(randomGif);
+
+                mosaicWindow.style.left = x + 'px';
+                mosaicWindow.style.top = y + 'px';
+                mosaicWindow.style.width = cellWidth + 'px';
+                mosaicWindow.style.opacity = '0';
+                mosaicWindow.style.transform = 'scale(0)';
+                mosaicWindow.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                mosaicWindow.classList.add('mosaic-tile');
+
+                playArea.appendChild(mosaicWindow);
+
+                setTimeout(() => {
+                    mosaicWindow.style.opacity = '1';
+                    mosaicWindow.style.transform = 'scale(1)';
+                }, 50);
+
+                setTimeout(() => {
+                    mosaicWindow.style.opacity = '0';
+                    mosaicWindow.style.transform = 'scale(0) rotate(180deg)';
+                }, 1500);
+
+                setTimeout(() => {
+                    if (mosaicWindow.parentNode) {
+                        mosaicWindow.remove();
+                    }
+                }, 2100);
+            }, (row * gridSize + col) * 80);
+        }
+    }
+}
+
+function orbitSystemEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const centerX = playArea.clientWidth / 2;
+    const centerY = playArea.clientHeight / 2;
+    const planets = Math.min(AppState.settings.glitchIntensity, 6);
+
+    // Create central sun
+    if (AppState.uploadedGifs.length > 0) {
+        const sunGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+        const sun = createGifWindow(sunGif);
+        sun.style.left = centerX - 75 + 'px';
+        sun.style.top = centerY - 75 + 'px';
+        sun.style.transform = 'scale(1.5)';
+        sun.classList.add('orbit-sun');
+        playArea.appendChild(sun);
+
+        setTimeout(() => {
+            if (sun.parentNode) {
+                sun.remove();
+            }
+        }, 3000);
+    }
+
+    // Create orbiting planets
+    for (let i = 0; i < planets; i++) {
+        setTimeout(() => {
+            const orbitRadius = 100 + i * 50;
+            const orbitSpeed = 2 + i * 0.5;
+            const startAngle = (Math.PI * 2 / planets) * i;
+
+            const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+            const planet = createGifWindow(randomGif);
+
+            const x = centerX + Math.cos(startAngle) * orbitRadius - 50;
+            const y = centerY + Math.sin(startAngle) * orbitRadius - 50;
+
+            planet.style.left = x + 'px';
+            planet.style.top = y + 'px';
+            planet.style.transition = `all ${orbitSpeed}s linear`;
+            planet.classList.add('orbit-planet');
+
+            playArea.appendChild(planet);
+
+            setTimeout(() => {
+                const endAngle = startAngle + Math.PI * 2;
+                const endX = centerX + Math.cos(endAngle) * orbitRadius - 50;
+                const endY = centerY + Math.sin(endAngle) * orbitRadius - 50;
+
+                planet.style.left = endX + 'px';
+                planet.style.top = endY + 'px';
+                planet.style.transform = 'rotate(360deg)';
+            }, 100);
+
+            setTimeout(() => {
+                if (planet.parentNode) {
+                    planet.remove();
+                }
+            }, orbitSpeed * 1000 + 200);
+        }, i * 150);
+    }
+}
+
+function tunnelVisionEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const centerX = playArea.clientWidth / 2;
+    const centerY = playArea.clientHeight / 2;
+    const rings = Math.min(AppState.settings.glitchIntensity, 8);
+
+    for (let i = 0; i < rings; i++) {
+        setTimeout(() => {
+            const randomGif = AppState.uploadedGifs[Math.floor(Math.random() * AppState.uploadedGifs.length)];
+            const tunnelWindow = createGifWindow(randomGif);
+
+            const scale = 2 - (i / rings) * 1.5;
+
+            tunnelWindow.style.left = centerX - 75 + 'px';
+            tunnelWindow.style.top = centerY - 75 + 'px';
+            tunnelWindow.style.transform = `scale(${scale})`;
+            tunnelWindow.style.opacity = '0.3';
+            tunnelWindow.style.transition = 'all 1.5s ease-out';
+            tunnelWindow.classList.add('tunnel-ring');
+
+            playArea.appendChild(tunnelWindow);
+
+            setTimeout(() => {
+                tunnelWindow.style.transform = 'scale(0.1)';
+                tunnelWindow.style.opacity = '0';
+            }, 50);
+
+            setTimeout(() => {
+                if (tunnelWindow.parentNode) {
+                    tunnelWindow.remove();
+                }
+            }, 1600);
+        }, i * 150);
+    }
+}
+
+function flipBookEffect() {
+    const playArea = document.getElementById('play-area');
+    if (!playArea || AppState.uploadedGifs.length === 0) return;
+
+    const centerX = playArea.clientWidth / 2 - 150;
+    const centerY = playArea.clientHeight / 2 - 100;
+    const frames = Math.min(AppState.uploadedGifs.length, AppState.settings.glitchIntensity * 2);
+
+    for (let i = 0; i < frames; i++) {
+        setTimeout(() => {
+            // Remove previous frame
+            const prevFrames = playArea.querySelectorAll('.flipbook-frame');
+            prevFrames.forEach(frame => frame.remove());
+
+            const gif = AppState.uploadedGifs[i % AppState.uploadedGifs.length];
+            const frameWindow = createGifWindow(gif);
+
+            frameWindow.style.left = centerX + 'px';
+            frameWindow.style.top = centerY + 'px';
+            frameWindow.style.width = '300px';
+            frameWindow.style.zIndex = '1000';
+            frameWindow.classList.add('flipbook-frame');
+
+            playArea.appendChild(frameWindow);
+        }, i * 200);
+    }
+
+    // Clean up last frame
+    setTimeout(() => {
+        const frames = playArea.querySelectorAll('.flipbook-frame');
+        frames.forEach(frame => frame.remove());
+    }, frames * 200 + 500);
 }
 
 function makeWindowsDraggable() {

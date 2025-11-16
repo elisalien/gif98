@@ -738,18 +738,32 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Windows 98 Specific Styles */
+/* Windows XP Specific Styles */
 :root {
-  --win98-gray: #c0c0c0;
-  --win98-dark-gray: #808080;
-  --win98-light-gray: #dfdfdf;
-  --win98-blue: #0080ff;
-  --win98-dark-blue: #000080;
-  --win98-desktop: #008080;
-  --win98-white: #ffffff;
-  --win98-black: #000000;
-  --win98-red: #ff0000;
-  --win98-bsod-blue: #0000aa;
+  /* Windows XP Luna Theme Colors */
+  --winxp-blue-start: #0054e3;
+  --winxp-blue-end: #3c89ff;
+  --winxp-blue-bright: #5ba0ff;
+  --winxp-green-start: #84c90a;
+  --winxp-green-end: #63b809;
+  --winxp-orange: #ff9c00;
+  --winxp-silver: #ece9d8;
+  --winxp-white: #ffffff;
+  --winxp-black: #000000;
+  --winxp-gray-light: #f1f0e8;
+  --winxp-gray-medium: #d4d0c8;
+  --winxp-gray-dark: #8b8b8b;
+  --winxp-border-light: #ffffff;
+  --winxp-border-dark: #003c74;
+  --winxp-shadow: rgba(0, 0, 0, 0.25);
+  --winxp-desktop: #5a7edc;
+  --winxp-taskbar-blue-start: #245edb;
+  --winxp-taskbar-blue-end: #3f8cf3;
+  --winxp-button-blue-start: #eef4ff;
+  --winxp-button-blue-end: #b6cef5;
+  --winxp-button-hover-start: #ffeec2;
+  --winxp-button-hover-end: #ffe194;
+  --winxp-bsod-blue: #0000aa;
 }
 
 * {
@@ -759,25 +773,21 @@ select.form-control {
 }
 
 body {
-  font-family: 'MS Sans Serif', sans-serif;
+  font-family: 'Tahoma', 'Segoe UI', sans-serif;
   font-size: 11px;
-  background: var(--win98-desktop);
+  background: var(--winxp-desktop);
   overflow: hidden;
-  cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=='), auto;
+  cursor: default;
 }
 
 /* Desktop */
 .desktop {
   width: 100vw;
   height: 100vh;
-  background: var(--win98-desktop);
-  background-image: 
-    radial-gradient(circle at 25% 25%, #ffffff08 0%, transparent 50%),
-    linear-gradient(45deg, #008080 25%, transparent 25%),
-    linear-gradient(-45deg, #008080 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, #006060 75%),
-    linear-gradient(-45deg, transparent 75%, #006060 75%);
-  background-size: 4px 4px;
+  background: linear-gradient(180deg, #5a7edc 0%, #3c5fba 100%);
+  background-image:
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 70%),
+    linear-gradient(180deg, #5a7edc 0%, #3c5fba 100%);
   position: relative;
 }
 
@@ -815,25 +825,30 @@ body {
 /* Windows */
 .window {
   position: absolute;
-  background: var(--win98-gray);
-  border: 2px outset var(--win98-gray);
-  min-width: 200px;
+  background: var(--winxp-silver);
+  border: 3px solid;
+  border-color: var(--winxp-border-light) var(--winxp-gray-dark) var(--winxp-gray-dark) var(--winxp-border-light);
+  border-radius: 8px 8px 0 0;
+  min-width: 250px;
   max-width: 600px;
-  box-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 12px var(--winxp-shadow), 0 0 0 1px rgba(0, 0, 0, 0.1);
   z-index: 1;
+  overflow: hidden;
 }
 
 .window-title-bar {
-  background: linear-gradient(90deg, var(--win98-blue) 0%, var(--win98-dark-blue) 100%);
-  color: var(--win98-white);
-  padding: 2px 4px;
+  background: linear-gradient(180deg, var(--winxp-blue-bright) 0%, var(--winxp-blue-start) 50%, var(--winxp-blue-end) 100%);
+  color: var(--winxp-white);
+  padding: 4px 6px 4px 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 18px;
-  font-size: 11px;
+  height: 28px;
+  font-size: 12px;
   font-weight: bold;
   cursor: move;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 8px 8px 0 0;
 }
 
 .window-title {
@@ -848,29 +863,44 @@ body {
 }
 
 .window-control {
-  width: 16px;
-  height: 14px;
-  background: var(--win98-gray);
-  border: 1px outset var(--win98-gray);
+  width: 21px;
+  height: 21px;
+  background: linear-gradient(180deg, var(--winxp-button-blue-start) 0%, var(--winxp-button-blue-end) 100%);
+  border: 1px solid rgba(0, 60, 116, 0.8);
+  border-radius: 3px;
   font-size: 10px;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.1s;
+  color: var(--winxp-black);
 }
 
 .window-control:hover {
-  background: var(--win98-light-gray);
+  background: linear-gradient(180deg, var(--winxp-button-hover-start) 0%, var(--winxp-button-hover-end) 100%);
+  border-color: rgba(255, 156, 0, 0.8);
 }
 
 .window-control:active {
-  border: 1px inset var(--win98-gray);
+  background: linear-gradient(180deg, var(--winxp-button-blue-end) 0%, var(--winxp-button-blue-start) 100%);
+  transform: translateY(1px);
+}
+
+.window-control.close {
+  background: linear-gradient(180deg, #ff9c85 0%, #ff6347 100%);
+  color: var(--winxp-white);
+  font-weight: bold;
+}
+
+.window-control.close:hover {
+  background: linear-gradient(180deg, #ffb8a8 0%, #ff8570 100%);
 }
 
 .window-content {
-  padding: 8px;
-  background: var(--win98-gray);
+  padding: 12px;
+  background: var(--winxp-silver);
 }
 
 /* Upload Section */
@@ -884,28 +914,38 @@ body {
 
 .upload-button {
   display: inline-block;
-  padding: 2px 16px;
-  background: var(--win98-gray);
-  border: 2px outset var(--win98-gray);
+  padding: 4px 18px;
+  background: linear-gradient(180deg, var(--winxp-button-blue-start) 0%, var(--winxp-button-blue-end) 100%);
+  border: 1px solid rgba(0, 60, 116, 0.8);
+  border-radius: 3px;
   cursor: pointer;
   font-size: 11px;
+  font-weight: 600;
+  color: var(--winxp-black);
+  transition: all 0.15s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .upload-button:hover {
-  background: var(--win98-light-gray);
+  background: linear-gradient(180deg, var(--winxp-button-hover-start) 0%, var(--winxp-button-hover-end) 100%);
+  border-color: rgba(255, 156, 0, 0.9);
 }
 
 .upload-button:active {
-  border: 2px inset var(--win98-gray);
+  background: linear-gradient(180deg, var(--winxp-button-blue-end) 0%, var(--winxp-button-blue-start) 100%);
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* GIF List */
 .gif-list {
-  border: 2px inset var(--win98-gray);
-  background: var(--win98-white);
-  padding: 4px;
-  max-height: 150px;
+  border: 1px solid #7f9db9;
+  background: var(--winxp-white);
+  padding: 6px;
+  max-height: 180px;
   overflow-y: auto;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .gif-item {
@@ -960,56 +1000,78 @@ body {
 
 input[type="range"] {
   width: 100%;
-  height: 16px;
-  background: var(--win98-gray);
-  border: 2px inset var(--win98-gray);
+  height: 20px;
+  background: linear-gradient(180deg, #e4e4e4 0%, #f8f8f8 100%);
+  border: 1px solid #7f9db9;
+  border-radius: 2px;
   outline: none;
   appearance: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
-  width: 16px;
-  height: 16px;
-  background: var(--win98-gray);
-  border: 2px outset var(--win98-gray);
+  width: 12px;
+  height: 18px;
+  background: linear-gradient(180deg, var(--winxp-button-blue-start) 0%, var(--winxp-button-blue-end) 100%);
+  border: 1px solid rgba(0, 60, 116, 0.8);
+  border-radius: 2px;
   cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: linear-gradient(180deg, var(--winxp-button-hover-start) 0%, var(--winxp-button-hover-end) 100%);
 }
 
 input[type="number"] {
   width: 60px;
-  padding: 2px 4px;
-  border: 2px inset var(--win98-gray);
-  background: var(--win98-white);
+  padding: 3px 6px;
+  border: 1px solid #7f9db9;
+  background: var(--winxp-white);
   font-size: 11px;
   margin-left: 8px;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 select {
   width: 100%;
-  padding: 2px 4px;
-  border: 2px inset var(--win98-gray);
-  background: var(--win98-white);
+  padding: 3px 6px;
+  border: 1px solid #7f9db9;
+  background: var(--winxp-white);
   font-size: 11px;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
 }
 
 /* Launch Button */
 .launch-button {
   width: 100%;
   padding: 8px;
-  background: var(--win98-gray);
-  border: 2px outset var(--win98-gray);
-  font-size: 11px;
+  background: linear-gradient(180deg, #5edc5a 0%, #3cb838 100%);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  font-size: 12px;
   font-weight: bold;
   cursor: pointer;
+  color: var(--winxp-white);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.15s;
 }
 
 .launch-button:hover {
-  background: var(--win98-light-gray);
+  background: linear-gradient(180deg, #7eff7a 0%, #5edc5a 100%);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
 }
 
 .launch-button:active {
-  border: 2px inset var(--win98-gray);
+  background: linear-gradient(180deg, #3cb838 0%, #5edc5a 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(1px);
 }
 
 /* Taskbar */
@@ -1018,42 +1080,60 @@ select {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 28px;
-  background: var(--win98-gray);
-  border-top: 1px solid var(--win98-light-gray);
+  height: 30px;
+  background: linear-gradient(180deg, var(--winxp-taskbar-blue-end) 0%, var(--winxp-taskbar-blue-start) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 2px 4px;
   z-index: 1000;
+  box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.25);
 }
 
 .start-button {
-  height: 24px;
-  padding: 0 8px;
-  background: var(--win98-gray);
-  border: 1px outset var(--win98-gray);
+  height: 26px;
+  padding: 0 12px 0 6px;
+  background: linear-gradient(180deg, #5edc5a 0%, #3cb838 100%);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   gap: 4px;
   cursor: pointer;
   font-size: 11px;
   font-weight: bold;
+  color: var(--winxp-white);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.1s;
+}
+
+.start-button:hover {
+  background: linear-gradient(180deg, #7eff7a 0%, #5edc5a 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .start-button:active {
-  border: 1px inset var(--win98-gray);
+  background: linear-gradient(180deg, #3cb838 0%, #5edc5a 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+  transform: translateY(1px);
 }
 
 .start-icon {
-  font-size: 12px;
+  font-size: 14px;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
 }
 
 .taskbar-time {
-  background: var(--win98-gray);
-  border: 1px inset var(--win98-gray);
-  padding: 2px 8px;
+  background: rgba(18, 87, 219, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  padding: 3px 10px;
   font-size: 10px;
+  color: var(--winxp-white);
+  font-weight: 600;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Play Page */
@@ -1117,21 +1197,29 @@ select {
   position: fixed;
   top: 20px;
   right: 20px;
-  padding: 8px 16px;
-  background: var(--win98-gray);
-  border: 2px outset var(--win98-gray);
-  color: var(--win98-black);
+  padding: 8px 20px;
+  background: linear-gradient(180deg, var(--winxp-button-blue-start) 0%, var(--winxp-button-blue-end) 100%);
+  border: 1px solid rgba(0, 60, 116, 0.8);
+  border-radius: 4px;
+  color: var(--winxp-black);
   cursor: pointer;
   font-size: 11px;
+  font-weight: 600;
   z-index: 3000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s;
 }
 
 .back-button:hover {
-  background: var(--win98-light-gray);
+  background: linear-gradient(180deg, var(--winxp-button-hover-start) 0%, var(--winxp-button-hover-end) 100%);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
 }
 
 .back-button:active {
-  border: 2px inset var(--win98-gray);
+  background: linear-gradient(180deg, var(--winxp-button-blue-end) 0%, var(--winxp-button-blue-start) 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(1px);
 }
 
 /* Error Dialog */
@@ -1164,15 +1252,25 @@ select {
 
 .error-ok-btn {
   margin-top: 10px;
-  padding: 4px 16px;
-  background: var(--win98-gray);
-  border: 2px outset var(--win98-gray);
+  padding: 5px 20px;
+  background: linear-gradient(180deg, var(--winxp-button-blue-start) 0%, var(--winxp-button-blue-end) 100%);
+  border: 1px solid rgba(0, 60, 116, 0.8);
+  border-radius: 3px;
   cursor: pointer;
   font-size: 11px;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.1s;
+}
+
+.error-ok-btn:hover {
+  background: linear-gradient(180deg, var(--winxp-button-hover-start) 0%, var(--winxp-button-hover-end) 100%);
 }
 
 .error-ok-btn:active {
-  border: 2px inset var(--win98-gray);
+  background: linear-gradient(180deg, var(--winxp-button-blue-end) 0%, var(--winxp-button-blue-start) 100%);
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 /* BSOD */
@@ -1260,4 +1358,205 @@ select {
 
 .error-shake {
   animation: errorShake 0.5s ease-in-out 3;
+}
+
+/* ========== NEW ANIMATION EFFECT STYLES ========== */
+
+/* Matrix Rain */
+.matrix-fall {
+  filter: hue-rotate(120deg) brightness(1.2);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+/* Kaleidoscope */
+.kaleidoscope-segment {
+  filter: saturate(2) brightness(1.1);
+  box-shadow: 0 0 15px rgba(255, 100, 255, 0.6);
+}
+
+/* Vortex Spiral */
+.vortex-spiral {
+  filter: hue-rotate(180deg) saturate(1.5);
+  box-shadow: 0 0 25px rgba(100, 200, 255, 0.7);
+}
+
+/* DNA Helix */
+.dna-helix {
+  filter: brightness(1.2) saturate(1.3);
+  box-shadow: 0 0 15px rgba(50, 150, 255, 0.6);
+}
+
+/* Particle Fireworks */
+.particle-firework {
+  filter: brightness(1.3) saturate(1.8);
+  box-shadow: 0 0 20px rgba(255, 200, 50, 0.8);
+}
+
+/* Wave Motion */
+.wave-motion {
+  filter: hue-rotate(200deg) brightness(1.1);
+  box-shadow: 0 0 15px rgba(100, 255, 200, 0.5);
+}
+
+/* 3D Cube */
+.cube-face {
+  perspective: 1000px;
+  backface-visibility: visible;
+  filter: brightness(1.1);
+  box-shadow: 0 0 30px rgba(200, 100, 255, 0.6);
+}
+
+/* Mosaic Grid */
+.mosaic-tile {
+  filter: saturate(1.5) contrast(1.1);
+  box-shadow: 0 0 10px rgba(255, 150, 100, 0.5);
+}
+
+/* Orbit System */
+.orbit-sun {
+  filter: brightness(1.5) saturate(2);
+  box-shadow: 0 0 40px rgba(255, 200, 0, 0.9);
+  animation: orbitPulse 2s infinite;
+}
+
+.orbit-planet {
+  filter: brightness(1.2);
+  box-shadow: 0 0 15px rgba(100, 150, 255, 0.6);
+}
+
+@keyframes orbitPulse {
+  0%, 100% { transform: scale(1.5); }
+  50% { transform: scale(1.7); }
+}
+
+/* Tunnel Vision */
+.tunnel-ring {
+  filter: blur(1px) brightness(0.9);
+  box-shadow: 0 0 20px rgba(150, 100, 255, 0.5);
+}
+
+/* Flip Book */
+.flipbook-frame {
+  filter: contrast(1.2) brightness(1.1);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced GIF Window for Play Page */
+.play-area .gif-window {
+  transition: all 0.3s ease;
+}
+
+.play-area .gif-window:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+/* Beat Sync Animation */
+@keyframes beatSync {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.beat-sync {
+  animation: beatSync 0.3s ease-in-out;
+}
+
+/* Smooth Appearance Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.fade-in-scale {
+  animation: fadeInScale 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Enhanced Desktop Icons */
+.desktop-icon {
+  transition: all 0.2s ease;
+}
+
+.desktop-icon:hover {
+  transform: translateY(-2px);
+}
+
+.desktop-icon:hover .icon-label {
+  background: rgba(0, 84, 227, 0.3);
+  border-radius: 2px;
+  padding: 2px 4px;
+}
+
+/* Window Focus Effect */
+.window.focused {
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0, 84, 227, 0.4);
+}
+
+/* Enhanced Scrollbar for Windows XP */
+.gif-list::-webkit-scrollbar {
+  width: 16px;
+}
+
+.gif-list::-webkit-scrollbar-track {
+  background: linear-gradient(90deg, #e4e4e4 0%, #f8f8f8 100%);
+  border: 1px solid #999;
+}
+
+.gif-list::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--winxp-button-blue-start) 0%, var(--winxp-button-blue-end) 100%);
+  border: 1px solid rgba(0, 60, 116, 0.8);
+  border-radius: 2px;
+}
+
+.gif-list::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--winxp-button-hover-start) 0%, var(--winxp-button-hover-end) 100%);
+}
+
+/* Loading Animation */
+@keyframes windowsXPLoad {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.loading-bar {
+  position: relative;
+  height: 20px;
+  background: var(--winxp-white);
+  border: 1px solid #7f9db9;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--winxp-blue-start), transparent);
+  animation: windowsXPLoad 1.5s infinite;
 }
