@@ -7,7 +7,8 @@ const AppState = {
         maxWindows: 5,
         glitchIntensity: 5,
         selectedEffect: 'Matrix Rain',
-        windowBehavior: 'Random'
+        windowBehavior: 'Random',
+        theme: 'xp'
     },
     playState: {
         isPlaying: false,
@@ -48,13 +49,19 @@ function initializeApp() {
 
 function setupEventListeners() {
     console.log('Setting up event listeners...');
-    
+
     // GIF upload
     const gifUpload = document.getElementById('gif-upload');
     if (gifUpload) {
         gifUpload.addEventListener('change', handleGifUpload);
     }
-    
+
+    // Theme selector
+    const themeSelect = document.getElementById('theme-select');
+    if (themeSelect) {
+        themeSelect.addEventListener('change', updateTheme);
+    }
+
     // BPM Controls
     const bpmSlider = document.getElementById('bpm-slider');
     const bpmInput = document.getElementById('bpm-input');
@@ -66,7 +73,7 @@ function setupEventListeners() {
         bpmInput.addEventListener('input', updateBPM);
         bpmInput.addEventListener('change', updateBPM);
     }
-    
+
     // Other controls
     const effectSelect = document.getElementById('effect-select');
     if (effectSelect) {
@@ -285,6 +292,20 @@ function updateBehavior(event) {
     console.log('Behavior updated to:', event.target.value);
 }
 
+function updateTheme(event) {
+    const theme = event.target.value;
+    AppState.settings.theme = theme;
+
+    // Update body class
+    if (theme === '98') {
+        document.body.classList.add('theme-98');
+    } else {
+        document.body.classList.remove('theme-98');
+    }
+
+    console.log('Theme updated to:', theme);
+}
+
 function updateControlDisplays() {
     const bpmDisplay = document.getElementById('bpm-display');
     const bpmSlider = document.getElementById('bpm-slider');
@@ -295,7 +316,8 @@ function updateControlDisplays() {
     const maxWindowsDisplay = document.getElementById('max-windows-display');
     const maxWindowsSlider = document.getElementById('max-windows-slider');
     const behaviorSelect = document.getElementById('behavior-select');
-    
+    const themeSelect = document.getElementById('theme-select');
+
     if (bpmDisplay) bpmDisplay.textContent = AppState.settings.bpm;
     if (bpmSlider) bpmSlider.value = AppState.settings.bpm;
     if (bpmInput) bpmInput.value = AppState.settings.bpm;
@@ -305,6 +327,7 @@ function updateControlDisplays() {
     if (maxWindowsDisplay) maxWindowsDisplay.textContent = AppState.settings.maxWindows;
     if (maxWindowsSlider) maxWindowsSlider.value = AppState.settings.maxWindows;
     if (behaviorSelect) behaviorSelect.value = AppState.settings.windowBehavior;
+    if (themeSelect) themeSelect.value = AppState.settings.theme;
 }
 
 function launchVisualizer() {
