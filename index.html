@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Windows XP GIF Visualizer</title>
+    <title>GIF98 - Windows XP GIF Visualizer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Desktop Background -->
+    <!-- Desktop -->
     <div id="desktop" class="desktop">
         <div class="desktop-icons">
             <div class="desktop-icon">
@@ -17,87 +17,107 @@
         </div>
 
         <!-- GIF Upload Window -->
-        <div id="upload-window" class="window" style="left: 50px; top: 50px;">
+        <div id="upload-window" class="window" style="left: 50px; top: 40px;">
             <div class="window-title-bar">
-                <div class="window-title">🖼️ Gestionnaire de GIFs</div>
+                <div class="window-title">Gestionnaire de GIFs</div>
                 <div class="window-controls">
                     <button class="window-control minimize" type="button">_</button>
-                    <button class="window-control maximize" type="button">□</button>
-                    <button class="window-control close" type="button" data-window="upload-window">×</button>
+                    <button class="window-control maximize" type="button">&square;</button>
+                    <button class="window-control close" type="button" data-window="upload-window">x</button>
                 </div>
             </div>
             <div class="window-content">
                 <div class="upload-section">
-                    <input type="file" id="gif-upload" accept=".gif" multiple style="display: none;">
-                    <button type="button" class="upload-button" onclick="document.getElementById('gif-upload').click()">Choisir des GIFs</button>
+                    <input type="file" id="gif-upload" accept=".gif" multiple style="display:none;">
+                    <button type="button" class="upload-button" onclick="document.getElementById('gif-upload').click()">Choisir des GIFs...</button>
+                    <span id="gif-count" style="margin-left:8px;color:#808080;">0 GIF(s)</span>
                 </div>
                 <div id="gif-list" class="gif-list">
-                    <div class="no-gifs">Aucun GIF uploadé</div>
+                    <div class="no-gifs">Aucun GIF uploade</div>
                 </div>
             </div>
         </div>
 
         <!-- Animation Controls Window -->
-        <div id="controls-window" class="window" style="left: 350px; top: 50px;">
+        <div id="controls-window" class="window" style="left: 340px; top: 40px;">
             <div class="window-title-bar">
-                <div class="window-title">⚙️ Panneau de Contrôle d'Animation</div>
+                <div class="window-title">Panneau de Controle</div>
                 <div class="window-controls">
                     <button class="window-control minimize" type="button">_</button>
-                    <button class="window-control maximize" type="button">□</button>
-                    <button class="window-control close" type="button" data-window="controls-window">×</button>
+                    <button class="window-control maximize" type="button">&square;</button>
+                    <button class="window-control close" type="button" data-window="controls-window">x</button>
                 </div>
             </div>
             <div class="window-content">
-                <div class="control-group">
-                    <label>BPM: <span id="bpm-display">120</span></label>
-                    <input type="range" id="bpm-slider" min="60" max="200" value="120" step="1">
-                    <input type="number" id="bpm-input" min="60" max="200" value="120">
+                <!-- Presets -->
+                <div class="preset-group">
+                    <label>Presets Glitch:</label>
+                    <div class="preset-buttons">
+                        <button class="preset-btn preset-danger" data-preset="Cascade Spam" type="button">Cascade Spam</button>
+                        <button class="preset-btn preset-danger" data-preset="BSOD Panic" type="button">BSOD Panic</button>
+                        <button class="preset-btn preset-danger" data-preset="DLL Hell" type="button">DLL Hell</button>
+                        <button class="preset-btn preset-danger" data-preset="Registry Corrupt" type="button">Registry Corrupt</button>
+                        <button class="preset-btn" data-preset="Memory Leak" type="button">Memory Leak</button>
+                        <button class="preset-btn" data-preset="System Hang" type="button">System Hang</button>
+                        <button class="preset-btn" data-preset="Matrix XP" type="button">Matrix XP</button>
+                        <button class="preset-btn" data-preset="Defrag" type="button">Defrag</button>
+                        <button class="preset-btn" data-preset="Screensaver" type="button">Screensaver</button>
+                        <button class="preset-btn" data-preset="Psychedelic" type="button">Psychedelic</button>
+                    </div>
                 </div>
 
                 <div class="control-group">
-                    <label>Type d'effet:</label>
+                    <label>BPM: <span id="bpm-display">120</span></label>
+                    <div class="control-row">
+                        <input type="range" id="bpm-slider" min="60" max="200" value="120" step="1">
+                        <input type="number" id="bpm-input" min="60" max="200" value="120">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>Effet:</label>
                     <select id="effect-select">
-                        <optgroup label="🎨 Effets Artistiques">
+                        <optgroup label="Effets Systeme (Classiques)">
+                            <option value="Window Cascade Glitch" selected>Cascade de Fenetres</option>
+                            <option value="Error Dialog Spam">Spam de Dialogues d'Erreur</option>
+                            <option value="Blue Screen of Death">Ecran Bleu de la Mort</option>
+                            <option value="Screen Corruption">Corruption d'Ecran</option>
+                            <option value="Memory Leak Visual">Fuite Memoire Visuelle</option>
+                            <option value="System Freeze">Gel Systeme</option>
+                        </optgroup>
+                        <optgroup label="Effets Artistiques">
                             <option value="Matrix Rain">Matrix - Pluie de Code</option>
-                            <option value="Kaleidoscope">Kaléidoscope Psychédélique</option>
+                            <option value="Kaleidoscope">Kaleidoscope</option>
                             <option value="Vortex Spiral">Vortex Spiral</option>
-                            <option value="DNA Helix">Hélice ADN</option>
-                            <option value="Particle Fireworks">Feux d'Artifice Particules</option>
+                            <option value="DNA Helix">Helice ADN</option>
+                            <option value="Particle Fireworks">Feux d'Artifice</option>
                             <option value="Wave Motion">Vagues Ondulantes</option>
                         </optgroup>
-                        <optgroup label="🎭 Effets Géométriques">
+                        <optgroup label="Effets Geometriques">
                             <option value="3D Cube Rotation">Cube 3D Rotatif</option>
-                            <option value="Mosaic Grid">Mosaïque Dynamique</option>
-                            <option value="Orbit System">Système Orbital</option>
+                            <option value="Mosaic Grid">Mosaique Dynamique</option>
+                            <option value="Orbit System">Systeme Orbital</option>
                             <option value="Tunnel Vision">Vision Tunnel</option>
                             <option value="Flip Book">Flip Book Rapide</option>
-                        </optgroup>
-                        <optgroup label="💥 Effets Système (Classiques)">
-                            <option value="Error Dialog Spam">Spam de Dialogues d'Erreur</option>
-                            <option value="Blue Screen of Death">Écran Bleu de la Mort</option>
-                            <option value="Window Cascade Glitch">Cascade de Fenêtres</option>
-                            <option value="Screen Corruption">Corruption d'Écran</option>
-                            <option value="Memory Leak Visual">Fuite Mémoire Visuelle</option>
-                            <option value="System Freeze">Gel Système</option>
                         </optgroup>
                     </select>
                 </div>
 
                 <div class="control-group">
-                    <label>Intensité: <span id="intensity-display">5</span></label>
+                    <label>Intensite: <span id="intensity-display">5</span></label>
                     <input type="range" id="intensity-slider" min="1" max="10" value="5">
                 </div>
 
                 <div class="control-group">
-                    <label>Nb. fenêtres max: <span id="max-windows-display">5</span></label>
+                    <label>Nb. fenetres max: <span id="max-windows-display">5</span></label>
                     <input type="range" id="max-windows-slider" min="1" max="10" value="5">
                 </div>
 
                 <div class="control-group">
                     <label>Disposition:</label>
                     <select id="behavior-select">
-                        <option value="Random">Aléatoire</option>
-                        <option value="Grid">Grille Organisée</option>
+                        <option value="Random">Aleatoire</option>
+                        <option value="Grid">Grille</option>
                         <option value="Cascade">Cascade XP</option>
                         <option value="Circle">Cercle</option>
                         <option value="Diagonal">Diagonale</option>
@@ -107,24 +127,25 @@
             </div>
         </div>
 
-        <!-- Launch Button -->
-        <div id="launch-window" class="window" style="left: 50px; top: 400px; width: 220px;">
+        <!-- Launch Window -->
+        <div id="launch-window" class="window" style="left: 50px; top: 380px; width: 260px;">
             <div class="window-title-bar">
-                <div class="window-title">🚀 Démarrage</div>
+                <div class="window-title">Demarrage</div>
                 <div class="window-controls">
-                    <button class="window-control close" type="button" data-window="launch-window">×</button>
+                    <button class="window-control close" type="button" data-window="launch-window">x</button>
                 </div>
             </div>
             <div class="window-content">
-                <button id="launch-btn" type="button" class="launch-button">▶️ Lancer le Spectacle</button>
+                <button id="launch-btn" type="button" class="launch-button">Lancer le Spectacle</button>
+                <div style="margin-top:6px;font-size:9px;color:#808080;text-align:center;">Espace = Lancer &middot; ? = Raccourcis</div>
             </div>
         </div>
 
         <!-- Taskbar -->
         <div class="taskbar">
             <div class="start-button">
-                <span class="start-icon">⊞</span>
-                Démarrer
+                <span class="start-icon">&#8862;</span>
+                Demarrer
             </div>
             <div class="taskbar-time" id="taskbar-time">14:00</div>
         </div>
@@ -134,20 +155,67 @@
     <div id="play-page" class="play-page hidden">
         <div id="play-area" class="play-area"></div>
         <div id="beat-indicator" class="beat-indicator"></div>
-        <button id="back-to-index" type="button" class="back-button">Retour aux Contrôles</button>
+
+        <!-- Play Controls Bar (taskbar-style) -->
+        <div class="play-controls">
+            <button id="play-back-btn" type="button" class="ctrl-btn ctrl-back">Retour</button>
+            <div class="ctrl-sep"></div>
+            <div class="ctrl-group">
+                <label>BPM:</label>
+                <input type="range" id="play-bpm-slider" min="60" max="200" value="120" step="1">
+                <span id="play-bpm-display">120</span>
+            </div>
+            <div class="ctrl-sep"></div>
+            <div class="ctrl-group">
+                <label>Effet:</label>
+                <select id="play-effect-select">
+                    <optgroup label="Systeme">
+                        <option value="Window Cascade Glitch" selected>Cascade</option>
+                        <option value="Error Dialog Spam">Erreurs</option>
+                        <option value="Blue Screen of Death">BSOD</option>
+                        <option value="Screen Corruption">Corruption</option>
+                        <option value="Memory Leak Visual">Memory Leak</option>
+                        <option value="System Freeze">Freeze</option>
+                    </optgroup>
+                    <optgroup label="Artistique">
+                        <option value="Matrix Rain">Matrix</option>
+                        <option value="Kaleidoscope">Kaleidoscope</option>
+                        <option value="Vortex Spiral">Vortex</option>
+                        <option value="DNA Helix">ADN</option>
+                        <option value="Particle Fireworks">Feux d'Artifice</option>
+                        <option value="Wave Motion">Vagues</option>
+                    </optgroup>
+                    <optgroup label="Geometrique">
+                        <option value="3D Cube Rotation">Cube 3D</option>
+                        <option value="Mosaic Grid">Mosaique</option>
+                        <option value="Orbit System">Orbite</option>
+                        <option value="Tunnel Vision">Tunnel</option>
+                        <option value="Flip Book">Flip Book</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="ctrl-sep"></div>
+            <div class="ctrl-group">
+                <label>Int:</label>
+                <input type="range" id="play-intensity-slider" min="1" max="10" value="5">
+                <span id="play-intensity-display">5</span>
+            </div>
+            <div class="ctrl-info">Espace=Pause &middot; Esc=Retour &middot; ?=Aide</div>
+        </div>
+        <button class="play-controls-toggle" type="button">Controles</button>
     </div>
 
     <!-- Error Dialog Template -->
     <div id="error-dialog-template" class="error-dialog hidden">
         <div class="window-title-bar">
-            <div class="window-title">⚠️ Erreur Système</div>
+            <div class="window-title">Erreur Systeme</div>
             <div class="window-controls">
-                <button class="window-control close" type="button">×</button>
+                <button class="window-control close" type="button">x</button>
             </div>
         </div>
         <div class="window-content">
             <div class="error-content">
-                <div class="error-icon">⚠️</div>
+                <div class="error-icon">&#9888;</div>
                 <div class="error-message"></div>
                 <button class="error-ok-btn" type="button">OK</button>
             </div>
@@ -157,12 +225,20 @@
     <!-- BSOD Template -->
     <div id="bsod-template" class="bsod hidden">
         <div class="bsod-content">
-            <h2>Une erreur fatale s'est produite</h2>
-            <p>Une exception fatale OE s'est produite à 0028:C0011E36 dans VXD VMM(01) +00010E36. L'application en cours va être fermée.</p>
-            <p>* Appuyez sur n'importe quelle touche pour continuer</p>
-            <p>* Appuyez sur CTRL+ALT+SUPPR pour redémarrer votre ordinateur. Vous</p>
-            <p>  perdrez toutes les données non sauvegardées dans toutes les applications.</p>
-            <p>Appuyez sur n'importe quelle touche pour continuer _</p>
+            <h2>Windows</h2>
+            <p>Une erreur fatale s'est produite. Le systeme a ete arrete pour eviter des dommages a votre ordinateur.</p>
+            <p>&nbsp;</p>
+            <p>IRQL_NOT_LESS_OR_EQUAL</p>
+            <p>&nbsp;</p>
+            <p>Si c'est la premiere fois que vous voyez cet ecran d'erreur,</p>
+            <p>redemarrez votre ordinateur. Si cet ecran apparait a nouveau,</p>
+            <p>suivez ces etapes :</p>
+            <p>&nbsp;</p>
+            <p>Desactivez ou desinstallez tous les pilotes ou logiciels recemment installes.</p>
+            <p>Desactivez les options memoire du BIOS telles que la mise en cache ou le shadowing.</p>
+            <p>&nbsp;</p>
+            <p>Informations techniques :</p>
+            <p>*** STOP: 0x0000000A (0x00000004, 0x00000002, 0x00000000, 0x8054AE2C)</p>
         </div>
     </div>
 
